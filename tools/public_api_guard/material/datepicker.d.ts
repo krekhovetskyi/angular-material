@@ -210,12 +210,12 @@ export declare class MatDatepickerContent<S, D = ExtractDateTypeFromSelection<S>
 }
 
 export declare class MatDatepickerInput<D> extends MatDatepickerInputBase<D | null, D> implements MatDatepickerControl<D | null> {
-    _datepicker: MatDatepicker<D>;
+    _datepicker: MatDatepickerPanel<MatDatepickerControl<D>, D | null, D>;
     protected _outsideValueChanged: undefined;
     protected _validator: ValidatorFn | null;
     get dateFilter(): DateFilterFn<D | null>;
     set dateFilter(value: DateFilterFn<D | null>);
-    set matDatepicker(datepicker: MatDatepicker<D>);
+    set matDatepicker(datepicker: MatDatepickerPanel<MatDatepickerControl<D>, D | null, D>);
     get max(): D | null;
     set max(value: D | null);
     get min(): D | null;
@@ -272,7 +272,7 @@ export declare class MatDatepickerToggle<D> implements AfterContentInit, OnChang
     _button: MatButton;
     _customIcon: MatDatepickerToggleIcon;
     _intl: MatDatepickerIntl;
-    datepicker: MatDatepickerBase<MatDatepickerControl<any>, D>;
+    datepicker: MatDatepickerPanel<MatDatepickerControl<any>, D>;
     disableRipple: boolean;
     get disabled(): boolean;
     set disabled(value: boolean);
@@ -314,8 +314,8 @@ export declare class MatDateRangeInput<D> implements MatFormFieldControl<DateRan
     set min(value: D | null);
     ngControl: NgControl | null;
     get placeholder(): string;
-    get rangePicker(): MatDateRangePicker<D>;
-    set rangePicker(rangePicker: MatDateRangePicker<D>);
+    get rangePicker(): MatDatepickerPanel<MatDatepickerControl<D>, DateRange<D>, D>;
+    set rangePicker(rangePicker: MatDatepickerPanel<MatDatepickerControl<D>, DateRange<D>, D>);
     get required(): boolean;
     set required(value: boolean);
     separator: string;
@@ -380,7 +380,7 @@ export declare class MatEndDate<D> extends _MatDateRangeInputBase<D> implements 
     ngDoCheck(): void;
     ngOnInit(): void;
     static ngAcceptInputType_disabled: BooleanInput;
-    static ɵdir: i0.ɵɵDirectiveDefWithMeta<MatEndDate<any>, "input[matEndDate]", never, {}, {}, never>;
+    static ɵdir: i0.ɵɵDirectiveDefWithMeta<MatEndDate<any>, "input[matEndDate]", never, {}, { "dateChange": "dateChange"; "dateInput": "dateInput"; }, never>;
     static ɵfac: i0.ɵɵFactoryDef<MatEndDate<any>, [null, null, null, null, { optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }]>;
 }
 
@@ -490,7 +490,7 @@ export declare class MatStartDate<D> extends _MatDateRangeInputBase<D> implement
     ngDoCheck(): void;
     ngOnInit(): void;
     static ngAcceptInputType_disabled: BooleanInput;
-    static ɵdir: i0.ɵɵDirectiveDefWithMeta<MatStartDate<any>, "input[matStartDate]", never, {}, {}, never>;
+    static ɵdir: i0.ɵɵDirectiveDefWithMeta<MatStartDate<any>, "input[matStartDate]", never, {}, { "dateChange": "dateChange"; "dateInput": "dateInput"; }, never>;
     static ɵfac: i0.ɵɵFactoryDef<MatStartDate<any>, [null, null, null, null, { optional: true; }, { optional: true; }, { optional: true; }, { optional: true; }]>;
 }
 

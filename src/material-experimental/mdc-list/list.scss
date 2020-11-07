@@ -50,16 +50,22 @@
   $size: 40px;
   $margin-value: 72px - $mdc-list-side-padding - $size;
 
-  margin-left: 0;
-  margin-right: $margin-value;
   width: $size;
   height: $size;
   border-radius: 50%;
 
-  // `.mdc-list-item` added for extra specificity to override MDC's built in styles.
-  [dir='rtl'] .mdc-list-item & {
-    margin-left: $margin-value;
-    margin-right: 0;
+  // Avatars that come before the text have the .mdc-list-item__graphic class.
+  // MDC's .mdc-list--avatar-list class would normally apply overrides to set the appropriate
+  // margins for avatar images, but since ours is a per-list-item setting we need to add similar
+  // styles ourselves.
+  &.mdc-list-item__graphic {
+    margin-left: 0;
+    margin-right: $margin-value;
+
+    [dir='rtl'] & {
+      margin-left: $margin-value;
+      margin-right: 0;
+    }
   }
 }
 

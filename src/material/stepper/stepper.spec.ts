@@ -29,6 +29,7 @@ import {
   Provider,
   ViewChildren,
   QueryList,
+  ViewChild,
 } from '@angular/core';
 import {ComponentFixture, fakeAsync, flush, inject, TestBed} from '@angular/core/testing';
 import {
@@ -881,6 +882,19 @@ describe('MatStepper', () => {
       expect(headerRipples.every(ripple => ripple.disabled)).toBe(true);
     });
 
+    it('should be able to disable ripples', () => {
+      const fixture = createComponent(SimpleMatVerticalStepperApp);
+      fixture.detectChanges();
+
+      const stepHeaders = fixture.debugElement.queryAll(By.directive(MatStepHeader));
+
+      stepHeaders[0].componentInstance.focus('mouse');
+      stepHeaders[1].componentInstance.focus();
+
+      expect(stepHeaders[1].nativeElement.classList).toContain('cdk-focused');
+      expect(stepHeaders[1].nativeElement.classList).toContain('cdk-mouse-focused');
+    });
+
     it('should be able to set the theme for all steps', () => {
       const fixture = createComponent(SimpleMatVerticalStepperApp);
       fixture.detectChanges();
@@ -1270,6 +1284,24 @@ describe('MatStepper', () => {
     expect(steppers[0].steps.length).toBe(3);
     expect(steppers[1].steps.length).toBe(2);
   });
+
+  it('should not throw when trying to change steps after initializing to an out-of-bounds index',
+    () => {
+      const fixture = createComponent(StepperWithStaticOutOfBoundsIndex);
+      fixture.detectChanges();
+      const stepper = fixture.componentInstance.stepper;
+
+      expect(stepper.selectedIndex).toBe(0);
+      expect(stepper.selected).toBeTruthy();
+
+      expect(() => {
+        stepper.selectedIndex = 1;
+        fixture.detectChanges();
+      }).not.toThrow();
+
+      expect(stepper.selectedIndex).toBe(1);
+      expect(stepper.selected).toBeTruthy();
+    });
 });
 
 /** Asserts that keyboard interaction works correctly. */
@@ -1779,4 +1811,18 @@ class StepperWithNgIf {
 })
 class NestedSteppers {
   @ViewChildren(MatStepper) steppers: QueryList<MatStepper>;
+}
+
+
+@Component({
+  template: `
+    <mat-vertical-stepper selectedIndex="1337">
+      <mat-step label="Step 1">Content 1</mat-step>
+      <mat-step label="Step 2">Content 2</mat-step>
+      <mat-step label="Step 3">Content 3</mat-step>
+    </mat-vertical-stepper>
+  `
+})
+class StepperWithStaticOutOfBoundsIndex {
+  @ViewChild(MatStepper) stepper: MatStepper;
 }

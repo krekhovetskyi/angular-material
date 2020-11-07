@@ -53,18 +53,21 @@ export class MatSubheaderHarness extends ComponentHarness {
 /** Selectors for the various list item sections that may contain user content. */
 export const enum MatListItemSection {
   CONTENT = '.mat-list-item-content'
+  // TODO(mmalerba): consider adding sections for leading/trailing icons.
 }
 
 /**
  * Shared behavior among the harnesses for the various `MatListItem` flavors.
  * @docs-private
  */
-export class MatListItemHarnessBase extends ContentContainerComponentHarness<MatListItemSection> {
+export abstract class MatListItemHarnessBase
+    extends ContentContainerComponentHarness<MatListItemSection> {
+
   private _lines = this.locatorForAll('.mat-line');
   private _avatar = this.locatorForOptional(avatarSelector);
   private _icon = this.locatorForOptional(iconSelector);
 
-  /** Gets the full text content of the list item (including text from any font icons). */
+  /** Gets the full text content of the list item. */
   async getText(): Promise<string> {
     return (await this.host()).text({exclude: `${iconSelector}, ${avatarSelector}`});
   }
